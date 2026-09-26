@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>공지사항 | 지역인구정책연구원</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --navy: #1f4d7c;
+    --navy-deep: #173a5e;
+    --ink: #1a2a44;
+    --yellow: #f6c945;
+    --bg: #ffffff;
+    --bg-soft: #eef2f7;
+    --card: #ffffff;
+    --text: #1f2733;
+    --muted: #68727f;
+    --line: #d8dfe8;
+    --title: #13306b;
+    --btn: #0f47a8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #1f4d7c; --navy-deep: #12263d; --ink: #dfe7f2;
+      --bg: #12161c; --bg-soft: #1b212a; --card: #1b212a; --text: #e3e8ef;
+      --muted: #9aa5b3; --line: #2c3541; --title: #9cc1ff; --btn: #3a78e0;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #1f4d7c; --navy-deep: #12263d; --ink: #dfe7f2;
+    --bg: #12161c; --bg-soft: #1b212a; --card: #1b212a; --text: #e3e8ef;
+    --muted: #9aa5b3; --line: #2c3541; --title: #9cc1ff; --btn: #3a78e0;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: 15px; line-height: 1.65; word-break: keep-all;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 18px; }
+
+  /* 헤더 */
+  header { background: var(--bg); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .logo { display: flex; align-items: center; gap: 8px; color: var(--ink); }
+  .logo svg { width: 42px; height: 30px; flex-shrink: 0; }
+  .logo strong { display: block; font-size: 17px; font-weight: 700; line-height: 1.2; }
+  .logo small { display: block; font-size: 8.5px; color: var(--muted); line-height: 1.2; }
+  nav.gnb { display: none; }
+  .head-right { display: flex; align-items: center; gap: 12px; }
+  .icon-btn { background: none; border: 0; padding: 4px; color: var(--ink); cursor: pointer; }
+  .login { display: none; font-size: 13px; border: 1px solid var(--line); border-radius: 4px; padding: 4px 14px; }
+  @media (min-width: 780px) {
+    nav.gnb { display: flex; gap: 34px; font-weight: 500; font-size: 15px; color: var(--ink); }
+    .login { display: inline-block; }
+    .menu-btn { display: none; }
+  }
+
+  /* 서브 상단 */
+  .sub-hero { background: var(--navy); color: #fff; padding: 28px 0 24px; }
+  .sub-hero h1 { margin: 0; font-size: 23px; font-weight: 700; }
+  .sub-hero p { margin: 2px 0 0; font-size: 13px; color: #fff; opacity: .8; }
+  .crumb { background: var(--bg-soft); font-size: 12px; color: var(--muted); }
+  .crumb .wrap { padding-top: 9px; padding-bottom: 9px; }
+
+  /* 게시글 머리 */
+  article { padding: 26px 0 8px; }
+  .post-head { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); padding: 18px 2px 14px; }
+  .tag {
+    display: inline-block; font-size: 12px; font-weight: 700; color: #fff;
+    background: var(--btn); border-radius: 3px; padding: 1px 8px; margin-bottom: 8px;
+  }
+  .post-head h2 { margin: 0 0 10px; font-size: 20px; line-height: 1.45; color: var(--text); }
+  .meta { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 13px; color: var(--muted); }
+  .meta b { font-weight: 500; color: var(--text); margin-right: 5px; }
+
+  /* 본문 */
+  .post-body { padding: 28px 2px 30px; border-bottom: 1px solid var(--line); }
+  .doc-label { text-align: center; font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+  .poster-title {
+    text-align: center; margin: 0 0 8px; color: var(--title);
+    font-size: clamp(22px, 5.6vw, 32px); font-weight: 900; line-height: 1.35; letter-spacing: -0.02em;
+  }
+  .poster-title span { display: block; }
+  .slogan { text-align: center; margin: 0 0 30px; }
+  .slogan em {
+    font-style: normal; font-weight: 700; color: var(--btn); font-size: 15px;
+    background: linear-gradient(transparent 62%, rgba(246, 201, 69, .55) 62%);
+    padding: 0 2px;
+  }
+
+  .sec { margin: 0 0 28px; }
+  .sec h3 {
+    margin: 0 0 10px; font-size: 17px; color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sec h3::before { content: ""; width: 10px; height: 10px; background: var(--navy); flex-shrink: 0; }
+  .sec p { margin: 0 0 10px; }
+
+  .acts { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .acts li {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--bg-soft); border-radius: 8px; padding: 11px 14px;
+  }
+  .acts .num {
+    width: 26px; height: 26px; border-radius: 50%; background: var(--navy); color: #fff;
+    display: grid; place-items: center; font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* 공모 개요 표 (참고 이미지 스타일) */
+  .overview { display: grid; gap: 7px; margin-top: 14px; }
+  .row { display: grid; grid-template-columns: 96px 1fr; min-height: 52px; }
+  .row .k {
+    display: grid; place-items: center; border-radius: 8px 0 0 8px;
+    font-weight: 700; font-size: 15px; color: #fff; text-align: center; padding: 6px;
+  }
+  .row .v {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    border: 1px solid var(--line); border-left: 0; border-radius: 0 8px 8px 0;
+    background: var(--card); padding: 10px 14px;
+  }
+  .k.c1 { background: #2b6cc4; }
+  .k.c2 { background: #1fa39b; }
+  .k.c3 { background: #6cb85e; }
+  .k.c4 { background: #f2cf55; color: #2b2a1c; }
+  .k.c5 { background: #f7c86a; color: #2b2a1c; }
+  @media (min-width: 560px) { .row { grid-template-columns: 120px 1fr; } }
+
+  .apply-wrap { text-align: center; margin: 30px 0 6px; }
+  .apply {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--btn); color: #fff; font-weight: 700; font-size: 17px;
+    padding: 14px 38px; border-radius: 999px; border: 0; cursor: pointer;
+    font-family: inherit; box-shadow: 0 4px 0 #0a2f70;
+    transition: transform .08s, box-shadow .08s;
+  }
+  .apply:active { transform: translateY(3px); box-shadow: 0 1px 0 #0a2f70; }
+  .apply:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+
+  .contact {
+    margin-top: 28px; padding: 14px 16px; border: 1px dashed var(--line); border-radius: 8px;
+    font-size: 14px; color: var(--muted);
+  }
+  .contact b { color: var(--text); font-weight: 500; }
+
+  .attach { padding: 13px 2px; border-bottom: 1px solid var(--line); font-size: 14px; display: flex; gap: 12px; }
+  .attach span { color: var(--muted); flex-shrink: 0; }
+  .attach a { text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+
+  .nav-post { border-bottom: 1px solid var(--line); font-size: 14px; }
+  .nav-post div { display: flex; gap: 14px; padding: 12px 2px; }
+  .nav-post div + div { border-top: 1px solid var(--line); }
+  .nav-post span { color: var(--muted); flex-shrink: 0; width: 42px; }
+  .nav-post a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .list-btn { text-align: center; padding: 22px 0 38px; }
+  .list-btn a { display: inline-block; border: 1px solid var(--ink); color: var(--ink); padding: 9px 34px; border-radius: 4px; font-weight: 500; }
+
+  footer { background: var(--navy-deep); color: #c9d4e3; font-size: 12px; padding: 22px 0 26px; }
+  footer p { margin: 0 0 4px; }
+  footer strong { color: #fff; font-size: 14px; display: block; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="지역인구정책연구원 홈">
+      <svg viewBox="0 0 42 30" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <circle cx="9" cy="9" r="4"/><circle cx="21" cy="6" r="4.3"/><circle cx="33" cy="9" r="4"/>
+        <path d="M2 27c0-5 3-8 7-8s7 3 7 8"/><path d="M13 27c0-6 3.5-10 8-10s8 4 8 10"/><path d="M26 27c0-5 3-8 7-8s7 3 7 8"/>
+      </svg>
+      <div><strong>지역인구정책연구원</strong><small>Research Institute for Regional Population Policy</small></div>
+    </a>
+    <nav class="gnb">
+      <a href="#">연구·정책</a><a href="#">자료실</a><a href="#">참여·소통</a><a href="#">알림·소식</a><a href="#">연구원 소개</a>
+    </nav>
+    <div class="head-right">
+      <button class="icon-btn" aria-label="검색">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      </button>
+      <a class="login" href="#">로그인</a>
+      <button class="icon-btn menu-btn" aria-label="메뉴 열기">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="sub-hero">
+  <div class="wrap">
+    <h1>공지사항</h1>
+    <p>연구원의 새로운 소식과 모집 공고를 알려드립니다.</p>
+  </div>
+</section>
+<div class="crumb"><div class="wrap">홈 &gt; 알림·소식 &gt; 공지사항</div></div>
+
+<main class="wrap">
+  <article>
+    <div class="post-head">
+      <span class="tag">모집</span>
+      <h2>'정책 실험실' 청소년 현장 전문가 모집</h2>
+      <div class="meta">
+        <span><b>작성자</b>사업기획팀</span>
+        <span><b>등록일</b>2027-01-01</span>
+      </div>
+    </div>
+
+    <div class="post-body">
+      <p class="doc-label">‘정책 실험실’ 현장 전문가 모집 공고문</p>
+      <h3 class="poster-title"><span>‘정책 실험실’에서</span><span>청소년 현장 전문가를 모집합니다!</span></h3>
+      <p class="slogan"><em>여러분의 아이디어가 지역의 미래 정책이 됩니다</em></p>
+
+      <section class="sec">
+        <h3>‘정책 실험실’이란?</h3>
+        <p>지역 문제에 관심 있는 사람들이 함께 모여 아이디어를 나누고, 다양한 분야의 정책을 기획하는 시민 참여형 정책 제안 플랫폼입니다.</p>
+      </section>
+
+      <section class="sec">
+        <h3>청소년 그룹은 이런 활동을 해요!</h3>
+        <ul class="acts">
+          <li><span class="num">1</span>우리 지역의 변화를 살펴봐요.</li>
+          <li><span class="num">2</span>지역에서 나타나는 문제를 찾아봐요.</li>
+          <li><span class="num">3</span>문제를 해결할 아이디어를 함께 고민해요.</li>
+          <li><span class="num">4</span>우리 지역에 필요한 정책을 기획하고 제안해요.</li>
+        </ul>
+      </section>
+
+      <section class="sec">
+        <h3>공모 개요</h3>
+        <p>올해의 주제는 <b>‘인구 구조 변화와 미래’</b>입니다.</p>
+        <p>저출산·고령화 등 인구 구조 변화로 달라지는 지역의 모습을 함께 살펴보고, 이에 대응하기 위한 정책 아이디어를 제안할 청소년 참여자를 모집합니다.</p>
+
+        <div class="overview">
+          <div class="row"><div class="k c1">접수 방식</div><div class="v">온라인 지원</div></div>
+          <div class="row"><div class="k c2">지원 자격</div><div class="v">중·고등학교 학생</div></div>
+          <div class="row"><div class="k c3">활동 내용</div><div class="v">인구 구조 변화 조사, 정책 아이디어 기획, 콘퍼런스 참여 등</div></div>
+          <div class="row"><div class="k c5">주최</div><div class="v">지역인구정책연구원</div></div>
+        </div>
+      </section>
+
+      <div class="apply-wrap">
+        <button class="apply" type="button">지원하러 가기
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="contact">
+        <b>문의</b> 사업기획팀 (044-000-0000, policy_lab@ripr.or.kr)
+      </div>
+    </div>
+
+    <div class="nav-post">
+      <div><span>이전글</span><a href="#">2026년 지역 인구 동향 보고서 발간 안내</a></div>
+      <div><span>다음글</span><a href="#">연구원 홈페이지 개편 안내</a></div>
+    </div>
+
+    <div class="list-btn"><a href="#">목록</a></div>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>지역인구정책연구원</strong>
+    <p>대표전화 044-000-0000</p>
+    <p>© Research Institute for Regional Population Policy. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
